@@ -1,28 +1,12 @@
 "use strict";
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const moonIcon = document.querySelector('.moon-icon');
-    const sunIcon = document.querySelector('.sun-icon');
-    if (themeToggle && moonIcon && sunIcon) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-            moonIcon.style.display = 'none';
-            sunIcon.style.display = 'block';
-        }
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            if (isLight) {
-                moonIcon.style.display = 'none';
-                sunIcon.style.display = 'block';
-            }
-            else {
-                moonIcon.style.display = 'block';
-                sunIcon.style.display = 'none';
-            }
+    const navbar = document.querySelector('.navbar');
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (navbar && menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navbar.classList.toggle('menu-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
         });
     }
     // Smooth scrolling for navigation links
@@ -41,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update active class
                     navLinks.forEach(nav => nav.classList.remove('active'));
                     link.classList.add('active');
+                    if (navbar && menuToggle) {
+                        navbar.classList.remove('menu-open');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        menuToggle.setAttribute('aria-label', 'Open navigation menu');
+                    }
                 }
             }
         });

@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    if (navbar && menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navbar.classList.toggle('menu-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        });
+    }
+
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('a[href^="#"]');
 
@@ -17,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update active class
                     navLinks.forEach(nav => nav.classList.remove('active'));
                     link.classList.add('active');
+
+                    if (navbar && menuToggle) {
+                        navbar.classList.remove('menu-open');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        menuToggle.setAttribute('aria-label', 'Open navigation menu');
+                    }
                 }
             }
         });
